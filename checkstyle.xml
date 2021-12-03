@@ -103,7 +103,9 @@
         <module name="NestedIfDepth">
             <property name="max" value="3"/>
         </module>
-        <module name="NestedTryDepth">
+        <module name="NestedTryDepth">UCU OOP 2021 homework 1
+
+
             <property name="max" value="1"/>
         </module>
         <module name="NoClone"/>

@@ -6,7 +6,7 @@ import org.junit.Test;
 public class TemperatureSeriesAnalysisTest {
 
     @Test
-    public void testAverageWithOneElementArray() {
+    public void testAverageWithOneElementArray() throws IllegalArgumentException, InputMismatchException {
         // setup input data and expected result
         double[] temperatureSeries = {-1.0};
         TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
@@ -20,7 +20,7 @@ public class TemperatureSeriesAnalysisTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testAverageWithEmptyArray() {
+    public void testAverageWithEmptyArray() throws IllegalArgumentException, InputMismatchException {
         double[] temperatureSeries = {};
         TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
 
@@ -29,7 +29,7 @@ public class TemperatureSeriesAnalysisTest {
     }
 
     @Test
-    public void testAverage() {
+    public void testAverage() throws IllegalArgumentException, InputMismatchException {
         double[] temperatureSeries = {3.0, -5.0, 1.0, 5.0};
         TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
         double expResult = 1.0;
@@ -38,6 +38,4 @@ public class TemperatureSeriesAnalysisTest {
         
         assertEquals(expResult, actualResult, 0.00001);        
     }
-    
-
 }
