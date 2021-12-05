@@ -9,5 +9,4 @@ public class TempSummaryStatistics {
         this.minTemp = analysis.min();
         this.maxTemp = analysis.max();
     }
-
 }

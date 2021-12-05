@@ -28,43 +28,58 @@ public class TemperatureSeriesAnalysis {
         }
     }
 
-    public double average() throws IllegalArgumentException {
-        try {
-            return Arrays.stream(temperatureSeries).sum() / size;
-        } catch (ArithmeticException err) {
+    private void checkEmpty() throws IllegalArgumentException {
+        if (size == 0) {
             throw new IllegalArgumentException("Empty temperature series!");
         }
+    }
+
+    public int getCapacity() {
+        return temperatureSeries.length;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public double average() throws IllegalArgumentException {
+        checkEmpty();
+        double res = 0.;
+        for (int i=0; i<size; ++i) {
+            res += temperatureSeries[i];
+        }
+        return res / size;
     }
 
     public double deviation() throws IllegalArgumentException {
-        try {
-            double res = 0., average = this.average();
-            for (double temperature : temperatureSeries) {
-                double temp = temperature-average;
-                res += temp*temp;
-            }
-            return res / size;
-        } catch (ArithmeticException err) {
-            throw new IllegalArgumentException("Empty temperature series!");
+        checkEmpty();
+        double res = 0., average = this.average();
+        for (int i=0; i<size; ++i) {
+            double temperature = temperatureSeries[i];
+            double temp = temperature-average;
+            res += temp*temp;
         }
+        return res / size;
     }
 
     public double min() throws IllegalArgumentException {
-        OptionalDouble res = Arrays.stream(temperatureSeries).min();
-        if (res.isPresent()) {
-            return res.getAsDouble();
-        } else {
-            throw new IllegalArgumentException("Empty temperature series!");
+        checkEmpty();
+        double res = Double.POSITIVE_INFINITY;
+        for (int i=0; i<size; ++i) {
+            if (res > temperatureSeries[i])
+                res = temperatureSeries[i];
         }
+        return res;
     }
 
     public double max() throws IllegalArgumentException {
-        OptionalDouble res = Arrays.stream(temperatureSeries).max();
-        if (res.isPresent()) {
-            return res.getAsDouble();
-        } else {
-            throw new IllegalArgumentException("Empty temperature series!");
+        checkEmpty();
+        double res = Double.NEGATIVE_INFINITY;
+        for (int i=0; i<size; ++i) {
+            if (res < temperatureSeries[i])
+                res = temperatureSeries[i];
         }
+        return res;
     }
 
     public double findTempClosestToZero() throws IllegalArgumentException {
@@ -72,11 +87,11 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double findTempClosestToValue(double tempValue) throws IllegalArgumentException {
-        if (temperatureSeries.length == 0)
-            throw new IllegalArgumentException("Empty temperature series!");
+        checkEmpty();
         double dist = Double.POSITIVE_INFINITY, res = Double.NEGATIVE_INFINITY;
-        for (double temp  : temperatureSeries) {
-            double distNow = Math.abs(temp-tempValue);
+        for (int i=0; i<size; ++i) {
+            double temp = temperatureSeries[i];
+            double distNow = Math.abs(temp - tempValue);
             if (Math.abs(distNow - dist) < 1e-4) {
                 res = Double.max(res, temp);
             } else if (distNow < dist) {
@@ -89,18 +104,18 @@ public class TemperatureSeriesAnalysis {
 
     public double[] findTempsLessThen(double tempValue) {
         List<Double> res = new ArrayList<>();
-        for (double temp : temperatureSeries) {
-            if (temp < tempValue)
-                res.add(temp);
+        for (int i=0; i<size; ++i) {
+            if (temperatureSeries[i] < tempValue)
+                res.add(temperatureSeries[i]);
         }
         return res.stream().mapToDouble(d -> d).toArray();
     }
 
     public double[] findTempsGreaterThen(double tempValue) {
         List<Double> res = new ArrayList<>();
-        for (double temp : temperatureSeries) {
-            if (temp > tempValue)
-                res.add(temp);
+        for (int i=0; i<size; ++i) {
+            if (temperatureSeries[i] > tempValue)
+                res.add(temperatureSeries[i]);
         }
         return res.stream().mapToDouble(d -> d).toArray();
     }
@@ -111,7 +126,7 @@ public class TemperatureSeriesAnalysis {
 
     public int addTemps(double... temps) throws InputMismatchException {
         int minSize = size + temps.length;
-        if (temperatureSeries.length <= minSize) {
+        if (temperatureSeries.length < minSize) {
             double[] tmp = new double[minSize * INCREMENT];
             System.arraycopy(temperatureSeries, 0, tmp, 0, size);
             temperatureSeries  = tmp;
