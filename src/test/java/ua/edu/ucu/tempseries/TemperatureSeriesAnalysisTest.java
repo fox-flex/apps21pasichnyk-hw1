@@ -1,12 +1,9 @@
 package ua.edu.ucu.tempseries;
 
 import static org.junit.Assert.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 
 public class TemperatureSeriesAnalysisTest {
     final String msg = "%^$&^!#@%$!&@$#^!@&$#%^!%^@#";
@@ -19,21 +16,9 @@ public class TemperatureSeriesAnalysisTest {
         analysis = new TemperatureSeriesAnalysis(new double[]{-1.0, 1.});
     }
 
-    @Test
-    public void testConstructor() {
-        InputMismatchException thrown = assertThrows(
-                InputMismatchException.class,
-                () -> new TemperatureSeriesAnalysis(new double[]{-662.0}),
-                msg
-        );
-        assertNotEquals(thrown.getMessage(), msg);
-
-        try {
-            TemperatureSeriesAnalysis be = new TemperatureSeriesAnalysis(new double[]{1.e29});
-            be = new TemperatureSeriesAnalysis();
-        } catch (InputMismatchException e) {
-            fail();
-        }
+    @Test(expected = InputMismatchException.class)
+    public void testConstructor() throws InputMismatchException {
+        new TemperatureSeriesAnalysis(new double[]{-662.0});
     }
 
     @Test
