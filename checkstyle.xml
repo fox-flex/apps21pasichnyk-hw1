@@ -103,16 +103,14 @@
         <module name="NestedIfDepth">
             <property name="max" value="3"/>
         </module>
-        <module name="NestedTryDepth">UCU OOP 2021 homework 1
-
-
+        <module name="NestedTryDepth">
             <property name="max" value="1"/>
         </module>
         <module name="NoClone"/>
         <module name="NoFinalizer"/>
         <module name="SuperClone"/>
         <module name="SuperFinalize"/>
-        
+
         <!-- Avoid masking of OutOfMemoryError or NullPointerExceptionError -->
         <module name="IllegalCatch"/>
 
