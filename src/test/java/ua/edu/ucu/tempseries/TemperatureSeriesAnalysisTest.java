@@ -6,9 +6,11 @@ import org.junit.Test;
 
 
 public class TemperatureSeriesAnalysisTest {
-    final String msg = "%^$&^!#@%$!&@$#^!@&$#%^!%^@#";
-    final double delta = 0.000001;
-    TemperatureSeriesAnalysis analysis, analysis0, analysis1;
+    static final double delta = 0.000001;
+    static TemperatureSeriesAnalysis analysis;
+    static TemperatureSeriesAnalysis analysis0;
+    static TemperatureSeriesAnalysis analysis1;
+
     @Before
     public void setUp() throws InputMismatchException {
         analysis0 = new TemperatureSeriesAnalysis(new double[]{});
@@ -116,10 +118,10 @@ public class TemperatureSeriesAnalysisTest {
     @Test
     public void testSummaryStatistics() throws IllegalArgumentException {
         TempSummaryStatistics res = analysis.summaryStatistics();
-        assertEquals(analysis.average(), res.avgTemp, delta);
-        assertEquals(analysis.deviation(), res.devTemp, delta);
-        assertEquals(analysis.min(), res.minTemp, delta);
-        assertEquals(analysis.max(), res.maxTemp, delta);
+        assertEquals(analysis.average(), res.getAverage(), delta);
+        assertEquals(analysis.deviation(), res.getDeviation(), delta);
+        assertEquals(analysis.min(), res.getMinTemp(), delta);
+        assertEquals(analysis.max(), res.getMaxTemp(), delta);
     }
 
     @Test(expected = IllegalArgumentException.class)

@@ -26,11 +26,6 @@ public class TemperatureSeriesAnalysis {
         }
     }
 
-    private void checkEmpty() throws IllegalArgumentException {
-        if (size == 0) {
-            throw new IllegalArgumentException("Empty temperature series!");
-        }
-    }
 
     public int getCapacity() {
         return temperatureSeries.length;
@@ -41,7 +36,9 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double average() throws IllegalArgumentException {
-        checkEmpty();
+        if (size == 0) {
+            throw new IllegalArgumentException("Empty temperature series!");
+        }
         double res = 0.;
         for (int i=0; i<size; ++i) {
             res += temperatureSeries[i];
@@ -50,7 +47,9 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double deviation() throws IllegalArgumentException {
-        checkEmpty();
+        if (size == 0) {
+            throw new IllegalArgumentException("Empty temperature series!");
+        }
         double res = 0., average = this.average();
         for (int i=0; i<size; ++i) {
             double temperature = temperatureSeries[i];
@@ -61,21 +60,27 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double min() throws IllegalArgumentException {
-        checkEmpty();
+        if (size == 0) {
+            throw new IllegalArgumentException("Empty temperature series!");
+        }
         double res = Double.POSITIVE_INFINITY;
         for (int i=0; i<size; ++i) {
-            if (res > temperatureSeries[i])
+            if (res > temperatureSeries[i]) {
                 res = temperatureSeries[i];
+            }
         }
         return res;
     }
 
     public double max() throws IllegalArgumentException {
-        checkEmpty();
+        if (size == 0) {
+            throw new IllegalArgumentException("Empty temperature series!");
+        }
         double res = Double.NEGATIVE_INFINITY;
         for (int i=0; i<size; ++i) {
-            if (res < temperatureSeries[i])
+            if (res < temperatureSeries[i]) {
                 res = temperatureSeries[i];
+            }
         }
         return res;
     }
@@ -85,7 +90,9 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double findTempClosestToValue(double tempValue) throws IllegalArgumentException {
-        checkEmpty();
+        if (size == 0) {
+            throw new IllegalArgumentException("Empty temperature series!");
+        }
         double dist = Double.POSITIVE_INFINITY, res = Double.NEGATIVE_INFINITY;
         for (int i=0; i<size; ++i) {
             double temp = temperatureSeries[i];
@@ -103,24 +110,28 @@ public class TemperatureSeriesAnalysis {
     public double[] findTempsLessThen(double tempValue) {
         List<Double> res = new ArrayList<>();
         for (int i=0; i<size; ++i) {
-            if (temperatureSeries[i] < tempValue)
+            if (temperatureSeries[i] < tempValue) {
                 res.add(temperatureSeries[i]);
+            }
         }
         double[] real = new double[res.size()];
-        for (int i=0; i < res.size(); ++i)
+        for (int i=0; i < res.size(); ++i) {
             real[i] = res.get(i);
+        }
         return real;
     }
 
     public double[] findTempsGreaterThen(double tempValue) {
         List<Double> res = new ArrayList<>();
         for (int i=0; i<size; ++i) {
-            if (temperatureSeries[i] > tempValue)
+            if (temperatureSeries[i] > tempValue) {
                 res.add(temperatureSeries[i]);
+            }
         }
         double[] real = new double[res.size()];
-        for (int i=0; i < res.size(); ++i)
+        for (int i=0; i < res.size(); ++i) {
             real[i] = res.get(i);
+        }
         return real;
     }
 
