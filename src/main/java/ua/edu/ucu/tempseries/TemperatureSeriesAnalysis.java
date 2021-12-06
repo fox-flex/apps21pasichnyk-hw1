@@ -1,9 +1,7 @@
 package ua.edu.ucu.tempseries;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.OptionalDouble;
 
 public class TemperatureSeriesAnalysis {
     private static final int BASE_SIZE = 6, INCREMENT = 2;
@@ -92,8 +90,8 @@ public class TemperatureSeriesAnalysis {
         for (int i=0; i<size; ++i) {
             double temp = temperatureSeries[i];
             double distNow = Math.abs(temp - tempValue);
-            if (Math.abs(distNow - dist) < 1e-4) {
-                res = Double.max(res, temp);
+            if (Math.abs(distNow - dist) < 1e-4 && res < temp) {
+                res = temp;
             } else if (distNow < dist) {
                 dist = distNow;
                 res = temp;
@@ -108,7 +106,10 @@ public class TemperatureSeriesAnalysis {
             if (temperatureSeries[i] < tempValue)
                 res.add(temperatureSeries[i]);
         }
-        return res.stream().mapToDouble(d -> d).toArray();
+        double[] real = new double[res.size()];
+        for (int i=0; i < res.size(); ++i)
+            real[i] = res.get(i);
+        return real;
     }
 
     public double[] findTempsGreaterThen(double tempValue) {
@@ -117,7 +118,10 @@ public class TemperatureSeriesAnalysis {
             if (temperatureSeries[i] > tempValue)
                 res.add(temperatureSeries[i]);
         }
-        return res.stream().mapToDouble(d -> d).toArray();
+        double[] real = new double[res.size()];
+        for (int i=0; i < res.size(); ++i)
+            real[i] = res.get(i);
+        return real;
     }
 
     public TempSummaryStatistics summaryStatistics() throws IllegalArgumentException {

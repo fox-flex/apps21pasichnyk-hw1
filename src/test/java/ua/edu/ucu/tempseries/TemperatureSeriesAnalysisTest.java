@@ -133,7 +133,7 @@ public class TemperatureSeriesAnalysisTest {
         assertEquals(6, analysis.getCapacity());
         analysis.addTemps(1.);
         assertEquals(6, analysis.getCapacity());
-        analysis.addTemps(1., 1., 1.);
+        assertEquals(3, analysis.addTemps(1., 1., 1.));
         assertEquals(6, analysis.getSize());
         assertEquals(6, analysis.getCapacity());
         analysis.addTemps(1.);
