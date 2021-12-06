@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TemperatureSeriesAnalysis {
-    private static final double accuracy = 1e-4;
+    private static final double ACCURACY = 1e-4;
     private static final int INCREMENT = 2;
     private static final int BASE_SIZE = 6;
     private static final double MIN_TEMP = -273.;
@@ -25,8 +25,8 @@ public class TemperatureSeriesAnalysis {
                 this.temperatureSeries[size++] = temp;
             } else {
                 this.size = 0;
-                throw new InputMismatchException("Temperature less then " +
-                        MIN_TEMP + " is not possible!");
+                throw new InputMismatchException("Temperature less then "
+                        + MIN_TEMP + " is not possible!");
             }
         }
     }
@@ -103,7 +103,7 @@ public class TemperatureSeriesAnalysis {
         for (int i=0; i<size; ++i) {
             double temp = temperatureSeries[i];
             double distNow = Math.abs(temp - tempValue);
-            if (Math.abs(distNow - dist) < accuracy && res < temp) {
+            if (Math.abs(distNow - dist) < ACCURACY && res < temp) {
                 res = temp;
             } else if (distNow < dist) {
                 dist = distNow;
