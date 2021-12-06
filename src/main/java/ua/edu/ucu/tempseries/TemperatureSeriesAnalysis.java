@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TemperatureSeriesAnalysis {
-    private static final int BASE_SIZE = 6, INCREMENT = 2;
+    private static final double accuracy = 1e-4;
+    private static final int INCREMENT = 2;
+    private static final int BASE_SIZE = 6;
     private static final double MIN_TEMP = -273.;
     private double[] temperatureSeries;
     private int size;
@@ -14,14 +16,17 @@ public class TemperatureSeriesAnalysis {
         this.size = 0;
     }
 
-    public TemperatureSeriesAnalysis(double[] temperatureSeries) throws InputMismatchException {
-        this.temperatureSeries = new double[Math.max(BASE_SIZE, temperatureSeries.length)];
+    public TemperatureSeriesAnalysis(double[] temperatureSeries)
+            throws InputMismatchException {
+        this.temperatureSeries = new double[Math.max(BASE_SIZE,
+                temperatureSeries.length)];
         for (double temp : temperatureSeries) {
             if (temp > MIN_TEMP) {
                 this.temperatureSeries[size++] = temp;
             } else {
                 this.size = 0;
-                throw new InputMismatchException("Temperature less then " + MIN_TEMP + " is not possible!");
+                throw new InputMismatchException("Temperature less then " +
+                        MIN_TEMP + " is not possible!");
             }
         }
     }
@@ -89,7 +94,8 @@ public class TemperatureSeriesAnalysis {
         return findTempClosestToValue(0.);
     }
 
-    public double findTempClosestToValue(double tempValue) throws IllegalArgumentException {
+    public double findTempClosestToValue(double tempValue)
+            throws IllegalArgumentException {
         if (size == 0) {
             throw new IllegalArgumentException("Empty temperature series!");
         }
@@ -97,7 +103,7 @@ public class TemperatureSeriesAnalysis {
         for (int i=0; i<size; ++i) {
             double temp = temperatureSeries[i];
             double distNow = Math.abs(temp - tempValue);
-            if (Math.abs(distNow - dist) < 1e-4 && res < temp) {
+            if (Math.abs(distNow - dist) < accuracy && res < temp) {
                 res = temp;
             } else if (distNow < dist) {
                 dist = distNow;
@@ -135,11 +141,12 @@ public class TemperatureSeriesAnalysis {
         return real;
     }
 
-    public TempSummaryStatistics summaryStatistics() throws IllegalArgumentException {
+    public TempSummaryStatistics summaryStatistics()
+            throws IllegalArgumentException {
         return new TempSummaryStatistics(this);
     }
 
-    public int addTemps(double... temps) throws InputMismatchException {
+    public int addTemps(double... temps)throws InputMismatchException {
         int minSize = size + temps.length;
         if (temperatureSeries.length < minSize) {
             double[] tmp = new double[minSize * INCREMENT];
@@ -153,7 +160,8 @@ public class TemperatureSeriesAnalysis {
                 ++add;
             } else {
                 size -= add;
-                throw new InputMismatchException("Temperature less then " + MIN_TEMP + " is not possible!");
+                throw new InputMismatchException("Temperature less then "
+                        + MIN_TEMP + " is not possible!");
             }
         }
         return add;

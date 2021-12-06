@@ -3,7 +3,8 @@ package ua.edu.ucu.tempseries;
 public class TempSummaryStatistics {
     private final double averageTemp, deviation, minTemp, maxTemp;
 
-    public TempSummaryStatistics(TemperatureSeriesAnalysis analysis) throws IllegalArgumentException {
+    public TempSummaryStatistics(TemperatureSeriesAnalysis analysis)
+            throws IllegalArgumentException {
         this.averageTemp = analysis.average();
         this.deviation = analysis.deviation();
         this.minTemp = analysis.min();

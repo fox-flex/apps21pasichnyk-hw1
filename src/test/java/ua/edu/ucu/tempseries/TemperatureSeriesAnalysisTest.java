@@ -86,7 +86,7 @@ public class TemperatureSeriesAnalysisTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testFindTempClosestToValueWithEmptyArray() throws IllegalArgumentException {
+    public void testFindTempClosestToValueWithEmptyArray()throws IllegalArgumentException {
         analysis0.findTempClosestToValue(10.);
     }
 
